@@ -6,12 +6,20 @@
 //
 
 import SwiftUI
+import TipKit
 
 @main
 struct BrujulaFinancieraApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .task {
+                    // Inicialización de TipKit
+                    try? Tips.configure([
+                        .displayFrequency(.immediate),
+                        .datastoreLocation(.applicationDefault)
+                    ])
+                }
         }
     }
 }

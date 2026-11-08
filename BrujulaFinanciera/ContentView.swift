@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+private let consejoGasto = ConsejoGastoFijoTip()
+
 struct ContentView: View {
     @AppStorage("movimientos_data") private var movimientosData: Data = Data()
     @State private var movimientos: [MovimientoFinanciero] = []
@@ -48,6 +50,7 @@ struct ContentView: View {
                     Button(action: { mostrarModal = true }) {
                         Image(systemName: "plus")
                     }
+                    .popoverTip(consejoGasto, arrowEdge: .top)
                 }
             }
             .sheet(isPresented: $mostrarModal) {
@@ -65,6 +68,10 @@ struct ContentView: View {
         concepto = ""
         monto = ""
         mostrarModal = false
+        
+        Task {
+            await ConsejoGastoFijoTip.agregarMovimientoEvent.donate()
+        }
     }
     
     private func eliminarMovimiento(offsets: IndexSet) {
