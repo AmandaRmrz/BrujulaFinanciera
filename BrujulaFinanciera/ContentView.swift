@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
-
-private let consejoGasto = ConsejoGastoFijoTip()
+import TipKit
 
 struct ContentView: View {
     @AppStorage("movimientos_data") private var movimientosData: Data = Data()
     @State private var movimientos: [MovimientoFinanciero] = []
+    
+    private let consejoGasto = ConsejoGastoFijoTip()
+    private let alertaDesviacion = AlertaDesviacionTip()
     
     @State private var mostrarModal = false
     @State private var concepto = ""
@@ -20,27 +22,33 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            List {
-                Section(header: Text("Movimientos Registrados")) {
-                    if movimientos.isEmpty {
-                        ContentUnavailableView(
-                            "Sin Registros",
-                            systemImage: "tray",
-                            description: Text("Agrega tu primer movimiento presionando el botón (+).")
-                        )
-                    } else {
-                        ForEach(movimientos) { item in
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(item.concepto).font(.headline)
-                                    Text(item.categoria).font(.subheadline).foregroundColor(.secondary)
+            VStack {
+                //Tarjeta TipView Inline
+                TipView(alertaDesviacion, arrowEdge: .bottom)
+                    .padding(.horizontal)
+                
+                List {
+                    Section(header: Text("Movimientos Registrados")) {
+                        if movimientos.isEmpty {
+                            ContentUnavailableView(
+                                "Sin Registros",
+                                systemImage: "tray",
+                                description: Text("Agrega movimientos con el botón (+) para activar las reglas de TipKit.")
+                            )
+                        } else {
+                            ForEach(movimientos) { item in
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text(item.concepto).font(.headline)
+                                        Text(item.categoria).font(.subheadline).foregroundColor(.secondary)
+                                    }
+                                    Spacer()
+                                    Text("$\(item.monto, specifier: "%.2f")")
+                                        .fontWeight(.bold)
                                 }
-                                Spacer()
-                                Text("$\(item.monto, specifier: "%.2f")")
-                                    .fontWeight(.bold)
                             }
+                            .onDelete(perform: eliminarMovimiento)
                         }
-                        .onDelete(perform: eliminarMovimiento)
                     }
                 }
             }
@@ -51,6 +59,14 @@ struct ContentView: View {
                         Image(systemName: "plus")
                     }
                     .popoverTip(consejoGasto, arrowEdge: .top)
+                }
+                
+                ToolbarItem(placement: .topBarLeading) {
+                    Button("Reset Tips") {
+                        try? Tips.resetDatastore()
+                        AlertaDesviacionTip.requiereBalanceMensual = false
+                    }
+                    .font(.caption)
                 }
             }
             .sheet(isPresented: $mostrarModal) {
@@ -65,13 +81,18 @@ struct ContentView: View {
         let nuevo = MovimientoFinanciero(concepto: concepto, monto: montoDouble, categoria: categoria)
         movimientos.append(nuevo)
         persistirDatos()
-        concepto = ""
-        monto = ""
-        mostrarModal = false
         
         Task {
             await ConsejoGastoFijoTip.agregarMovimientoEvent.donate()
         }
+        
+        if movimientos.count >= 3 {
+            AlertaDesviacionTip.requiereBalanceMensual = true
+        }
+        
+        concepto = ""
+        monto = ""
+        mostrarModal = false
     }
     
     private func eliminarMovimiento(offsets: IndexSet) {
@@ -94,8 +115,8 @@ struct ContentView: View {
     private var formularioAgregar: some View {
         NavigationStack {
             Form {
-                TextField("Concepto (ej. Almuerzo)", text: $concepto)
-                TextField("Monto (ej. 12.50)", text: $monto)
+                TextField("Concepto", text: $concepto)
+                TextField("Monto", text: $monto)
                     .keyboardType(.decimalPad)
                 Picker("Categoría", selection: $categoria) {
                     Text("Alimentación").tag("Alimentación")

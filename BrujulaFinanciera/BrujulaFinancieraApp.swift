@@ -14,7 +14,7 @@ struct BrujulaFinancieraApp: App {
         WindowGroup {
             ContentView()
                 .task {
-                    // Inicialización de TipKit
+                    //Inicializacion de TipKit
                     try? Tips.configure([
                         .displayFrequency(.immediate),
                         .datastoreLocation(.applicationDefault)
