@@ -331,26 +331,22 @@ struct ContentView: View {
     }
 
     private func persistirTodo() {
-            if let encoded = try? JSONEncoder().encode(movimientos) {
-                movimientosData = encoded
-            }
-            persistirCategorias()
-        }
+        if let encoded = try? JSONEncoder().encode(movimientos) { movimientosData = encoded }
+        persistirCategorias()
+    }
 
-        private func persistirCategorias() {
-            if let encoded = try? JSONEncoder().encode(categorias) {
-                categoriasData = encoded
-            }
-        }
+    private func persistirCategorias() {
+        if let encoded = try? JSONEncoder().encode(categorias) { categoriasData = encoded }
+    }
 
-        private func cargarTodo() {
-            if let decoded = try? JSONDecoder().decode([MovimientoFinanciero].self, from: movimientosData) {
-                movimientos = decoded
-            }
-            if let decoded = try? JSONDecoder().decode([CategoriaFinanciera].self, from: categoriasData) {
-                categorias = decoded
-            }
+    private func cargarTodo() {
+        if let decoded = try? JSONDecoder().decode([MovimientoFinanciero].self, from: movimientosData) {
+            movimientos = decoded
         }
+        if let decoded = try? JSONDecoder().decode([CategoriaFinanciera].self, from: categoriasData) {
+            categorias = decoded
+        }
+    }
 
     private func resetTips() {
         try? Tips.resetDatastore()
