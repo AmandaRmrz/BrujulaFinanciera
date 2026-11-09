@@ -12,6 +12,7 @@
 		659D3BFC30A11DC1008D549E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659D3BFB30A11DC1008D549E /* Assets.xcassets */; };
 		659D3BFF30A11DC1008D549E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659D3BFE30A11DC1008D549E /* Preview Assets.xcassets */; };
 		659D3C0630A121B5008D549E /* TipsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 659D3C0530A121B5008D549E /* TipsManager.swift */; };
+		65C08FC630A1520A00142AEE /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C08FC530A1520A00142AEE /* Models.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		659D3BFB30A11DC1008D549E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		659D3BFE30A11DC1008D549E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		659D3C0530A121B5008D549E /* TipsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipsManager.swift; sourceTree = "<group>"; };
+		65C08FC530A1520A00142AEE /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 				659D3BF730A11DBB008D549E /* BrujulaFinancieraApp.swift */,
 				659D3BF930A11DBB008D549E /* ContentView.swift */,
 				659D3C0530A121B5008D549E /* TipsManager.swift */,
+				65C08FC530A1520A00142AEE /* Models.swift */,
 				659D3BFB30A11DC1008D549E /* Assets.xcassets */,
 				659D3BFD30A11DC1008D549E /* Preview Content */,
 			);
@@ -143,6 +146,7 @@
 				659D3BFA30A11DBB008D549E /* ContentView.swift in Sources */,
 				659D3C0630A121B5008D549E /* TipsManager.swift in Sources */,
 				659D3BF830A11DBB008D549E /* BrujulaFinancieraApp.swift in Sources */,
+				65C08FC630A1520A00142AEE /* Models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

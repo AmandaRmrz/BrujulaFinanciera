@@ -8,15 +8,6 @@
 import Foundation
 import TipKit
 
-//Modelo de Datos Persistente
-struct MovimientoFinanciero: Identifiable, Codable {
-    var id = UUID()
-    var concepto: String
-    var monto: Double
-    var fecha: Date = Date()
-    var categoria: String
-}
-
 //Tip 1: Basado en Eventos (Popover Flotante)
 struct ConsejoGastoFijoTip: Tip {
     static let agregarMovimientoEvent = Tips.Event(id: "agregarMovimientoEvent")
